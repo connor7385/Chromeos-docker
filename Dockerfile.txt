@@ -1,0 +1,33 @@
+FROM chromebrew/chromeos-x86_64-nocturne-m90
+
+# Install required packages for noVNC and audio support
+RUN apt-get update && apt-get install -y \
+    pulseaudio \
+    alsa-utils \
+    x11vnc \
+    xvfb \
+    novnc \
+    websockify \
+    supervisor \
+    sudo \
+    dbus-x11 \
+    xfce4
+
+# Create a user to run the desktop environment
+RUN useradd -ms /bin/bash chromeos
+
+# Switch to the newly created user
+USER chromeos
+WORKDIR /home/chromeos
+
+# Set up noVNC
+RUN mkdir -p /home/chromeos/noVNC/utils/websockify && \
+    ln -s /usr/share/novnc/vnc_lite.html /home/chromeos/noVNC/index.html
+
+COPY init.sh /home/chromeos/init.sh
+RUN chmod +x /home/chromeos/init.sh
+
+# Expose the necessary ports
+EXPOSE 5901 6080
+
+CMD ["/home/chromeos/init.sh"]

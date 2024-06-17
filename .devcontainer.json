@@ -1,0 +1,16 @@
+{
+  "name": "ChromeOS Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "runArgs": [
+    "--privileged"
+  ],
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "ms-azuretools.vscode-docker"
+  ],
+  "postCreateCommand": "/home/chromeos/init.sh"
+}

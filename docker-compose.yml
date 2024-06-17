@@ -1,0 +1,11 @@
+version: '3'
+services:
+  chromeos:
+    build: .
+    ports:
+      - "5901:5901"
+      - "6080:6080"
+    environment:
+      - DISPLAY=:0
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
